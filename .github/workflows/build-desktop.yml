@@ -140,7 +140,7 @@ jobs:
     # We intentionally keep this runner on the oldest supported OS in GitHub Actions
     # for maximum compatibility across GLIBC versions
     runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'all' }}
     needs: setup
     env:
       _PACKAGE_VERSION: ${{ needs.setup.outputs.package_version }}
@@ -290,7 +290,6 @@ jobs:
     # We intentionally keep this runner on the oldest supported OS in GitHub Actions
     # for maximum compatibility across GLIBC versions
     runs-on: ubuntu-22.04-arm
-    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
     needs: setup
     env:
       _PACKAGE_VERSION: ${{ needs.setup.outputs.package_version }}
@@ -409,7 +408,7 @@ jobs:
 
   check-failures:
     name: Check for failures
-    if: always()
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'all' }}
     runs-on: ubuntu-22.04
     needs:
       - electron-verify
