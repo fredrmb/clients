@@ -5,32 +5,6 @@
 name: Build Desktop
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-    branches-ignore:
-      - 'l10n_master'
-      - 'cf-pages'
-    paths:
-      - 'apps/desktop/**'
-      - 'libs/**'
-      - '*'
-      - '!*.md'
-      - '!*.txt'
-      - '.github/workflows/build-desktop.yml'
-  push:
-    branches:
-      - 'main'
-      - 'rc'
-      - 'hotfix-rc-desktop'
-    paths:
-      - 'apps/desktop/**'
-      - 'libs/**'
-      - '*'
-      - '!*.md'
-      - '!*.txt'
-      - '.github/workflows/build-desktop.yml'
-  workflow_call:
-    inputs: {}
   workflow_dispatch:
     inputs:
       sdk_branch:
@@ -41,7 +15,6 @@ on:
         description: "Force distribute to TestFlight regardless of branch (useful for QA testing on feature branches)"
         type: boolean
         default: true
-
       target:
         description: "Which jobs to run"
         required: true
