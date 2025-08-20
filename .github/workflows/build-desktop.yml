@@ -42,6 +42,14 @@ on:
         type: boolean
         default: true
 
+      target:
+        description: "Which jobs to run"
+        required: true
+        default: "linux-arm64"
+        type: choice
+        options:
+          - all
+          - linux-arm64
 defaults:
   run:
     shell: bash
@@ -159,6 +167,7 @@ jobs:
     # We intentionally keep this runner on the oldest supported OS in GitHub Actions
     # for maximum compatibility across GLIBC versions
     runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
     needs: setup
     env:
       _PACKAGE_VERSION: ${{ needs.setup.outputs.package_version }}
@@ -308,6 +317,7 @@ jobs:
     # We intentionally keep this runner on the oldest supported OS in GitHub Actions
     # for maximum compatibility across GLIBC versions
     runs-on: ubuntu-22.04-arm
+    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
     needs: setup
     env:
       _PACKAGE_VERSION: ${{ needs.setup.outputs.package_version }}
@@ -400,6 +410,7 @@ jobs:
   windows:
     name: Windows Build
     runs-on: windows-2022
+    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
     needs:
       - setup
     permissions:
@@ -660,6 +671,7 @@ jobs:
   macos-build:
     name: MacOS Build
     runs-on: macos-13
+    if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.target == 'all' || github.event.inputs.target == 'linux-arm64') || github.event_name != 'workflow_dispatch' }}
     needs:
       - setup
     permissions:
