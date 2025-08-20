@@ -319,9 +319,11 @@ jobs:
       - name: Set up Snap
         run: sudo snap install snapcraft --classic
 
+      - name: Install LXD
+        run: sudo snap install lxd
+
       - name: Set up LXD
         run: |
-          sudo snap install lxd
           getent group lxd | grep -qwF "$USER" || sudo usermod -aG lxd "$USER"
           newgrp lxd
           sudo lxd init --auto
